@@ -1,4 +1,10 @@
-import { Button, Image, ScrollView, StyleSheet } from 'react-native';
+import {
+	Button,
+	Image,
+	ScrollView,
+	StyleSheet,
+	TouchableOpacity,
+} from 'react-native';
 
 import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/components/Themed';
@@ -56,6 +62,47 @@ export default function TabOneScreen() {
 				</View>
 			) : (
 				<ScrollView>
+					<View
+						style={{
+							backgroundColor: 'transparent',
+							borderColor: '#1C2128',
+							borderWidth: 1,
+							display: 'flex',
+							flexDirection: 'row',
+							marginTop: 40,
+							marginHorizontal: 10,
+							padding: 3,
+							borderRadius: 10,
+						}}>
+						<TouchableOpacity
+							style={{
+								display: 'flex',
+								justifyContent: 'center',
+								flex: 1,
+								backgroundColor: '#1C2128',
+								padding: 10,
+								borderRadius: 6,
+							}}>
+							<Text
+								style={{ color: 'white', fontSize: 12, textAlign: 'center' }}>
+								Movies
+							</Text>
+						</TouchableOpacity>
+						<TouchableOpacity
+							style={{ display: 'flex', justifyContent: 'center', flex: 1 }}>
+							<Text
+								style={{ color: 'white', fontSize: 12, textAlign: 'center' }}>
+								Series
+							</Text>
+						</TouchableOpacity>
+						<TouchableOpacity
+							style={{ display: 'flex', justifyContent: 'center', flex: 1 }}>
+							<Text
+								style={{ color: 'white', fontSize: 12, textAlign: 'center' }}>
+								Anime
+							</Text>
+						</TouchableOpacity>
+					</View>
 					<HorzintalScroll movies={discoverMovies} title={'Discover Movies'} />
 					<HorzintalScroll
 						movies={trendingMoviesToday}
@@ -66,6 +113,17 @@ export default function TabOneScreen() {
 						title={'Trending Movies Today'}
 					/>
 				</ScrollView>
+				// <ScrollView>
+				// 	<HorzintalScroll movies={discoverMovies} title={'Discover Movies'} />
+				// 	<HorzintalScroll
+				// 		movies={trendingMoviesToday}
+				// 		title={'Discover Movies'}
+				// 	/>
+				// 	<HorzintalScroll
+				// 		movies={trendingMovies}
+				// 		title={'Trending Movies Today'}
+				// 	/>
+				// </ScrollView>
 			)}
 		</>
 	);
@@ -74,16 +132,18 @@ export default function TabOneScreen() {
 export const tabStyles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#272C35',
+		backgroundColor: '#090E12',
+		paddingTop: 10,
 	},
 	title: {
-		fontSize: 20,
+		fontSize: 18,
 	},
 	heading: {
-		fontSize: 20,
-
+		fontSize: 18,
 		marginLeft: 16,
+		paddingBottom: -10,
 		color: '#a9a9a9',
+		borderBottomColor: '#a9a9a9',
 	},
 	imageCard: {
 		width: 150,
