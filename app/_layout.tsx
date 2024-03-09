@@ -67,14 +67,14 @@ function RootLayoutNav() {
 	}, []);
 
 	return (
-		<Provider store={store}>
-			<ThemeProvider value={DarkTheme}>
+		<ThemeProvider value={DarkTheme}>
+			<Provider store={store}>
 				<Stack initialRouteName='signin'>
 					<Stack.Screen name='signin' options={{ headerShown: false }} />
 					<Stack.Screen name='(tabs)' options={{ headerShown: false }} />
 					<Stack.Screen name='modal' options={{ presentation: 'modal' }} />
 				</Stack>
-			</ThemeProvider>
-		</Provider>
+			</Provider>
+		</ThemeProvider>
 	);
 }
