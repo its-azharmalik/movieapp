@@ -1,77 +1,97 @@
-import React from 'react';
-import { StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Image, StyleSheet } from 'react-native';
 
-import { ExternalLink } from './ExternalLink';
 import { MonoText } from './StyledText';
 import { Text, View } from './Themed';
 
 import Colors from '@/constants/Colors';
+import {
+	GoogleSignin,
+	statusCodes,
+} from '@react-native-google-signin/google-signin';
+import { router } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function EditScreenInfo({ path }: { path: string }) {
-  return (
-    <View>
-      <View style={styles.getStartedContainer}>
-        <Text
-          style={styles.getStartedText}
-          lightColor="rgba(0,0,0,0.8)"
-          darkColor="rgba(255,255,255,0.8)">
-          Open up the code for this screen:
-        </Text>
+	const logout = async () => {
+		try {
+			await GoogleSignin.signOut().then(async () => {
+				await GoogleSignin.isSignedIn().then((res: any) => {
+					console.log('After the Logout the user login status is:', res);
+					if (!res) router.replace('/signin');
+				});
+			});
+		} catch (e: any) {
+			console.log('Error in the Logout Block', e);
+			if (e.code == statusCodes.SIGN_IN_REQUIRED) router.replace('/signin');
+		}
+	};
 
-        <View
-          style={[styles.codeHighlightContainer, styles.homeScreenFilename]}
-          darkColor="rgba(255,255,255,0.05)"
-          lightColor="rgba(0,0,0,0.05)">
-          <MonoText>{path}</MonoText>
-        </View>
+	const [user, setUser] = useState<any>(null);
 
-        <Text
-          style={styles.getStartedText}
-          lightColor="rgba(0,0,0,0.8)"
-          darkColor="rgba(255,255,255,0.8)">
-          Change any of the text, save the file, and your app will automatically update.
-        </Text>
-      </View>
+	useEffect(() => {
+		getUser();
+	}, []);
 
-      <View style={styles.helpContainer}>
-        <ExternalLink
-          style={styles.helpLink}
-          href="https://docs.expo.io/get-started/create-a-new-app/#opening-the-app-on-your-phonetablet">
-          <Text style={styles.helpLinkText} lightColor={Colors.light.tint}>
-            Tap here if your app doesn't automatically update after making changes
-          </Text>
-        </ExternalLink>
-      </View>
-    </View>
-  );
+	const getUser = async () => {
+		const userData = await AsyncStorage.getItem('user');
+		let data;
+		if (userData) data = JSON.parse(userData);
+		console.log(data.user);
+		setUser(data);
+	};
+
+	return (
+		<View>
+			<View style={styles.helpContainer}>
+				{user != '' && user != null && (
+					<>
+						<Image style={styles.userPic} source={{ uri: user?.user?.photo }} />
+						<Text style={styles.getStartedText}>{user.user.name}</Text>
+						<Text style={styles.getStartedText}>{user.user.email}</Text>
+					</>
+				)}
+				<Text style={styles.logoutBtn} onPress={logout}>
+					Logout
+				</Text>
+			</View>
+		</View>
+	);
 }
 
 const styles = StyleSheet.create({
-  getStartedContainer: {
-    alignItems: 'center',
-    marginHorizontal: 50,
-  },
-  homeScreenFilename: {
-    marginVertical: 7,
-  },
-  codeHighlightContainer: {
-    borderRadius: 3,
-    paddingHorizontal: 4,
-  },
-  getStartedText: {
-    fontSize: 17,
-    lineHeight: 24,
-    textAlign: 'center',
-  },
-  helpContainer: {
-    marginTop: 15,
-    marginHorizontal: 20,
-    alignItems: 'center',
-  },
-  helpLink: {
-    paddingVertical: 15,
-  },
-  helpLinkText: {
-    textAlign: 'center',
-  },
+	getStartedContainer: {
+		alignItems: 'center',
+		marginHorizontal: 50,
+		justifyContent: 'center',
+	},
+
+	getStartedText: {
+		fontSize: 17,
+		lineHeight: 24,
+		textAlign: 'center',
+	},
+	helpContainer: {
+		marginTop: 15,
+		marginHorizontal: 20,
+		alignItems: 'center',
+	},
+
+	userPic: {
+		width: 100,
+		height: 100,
+		borderRadius: 50,
+		margin: 20,
+	},
+	logoutBtn: {
+		color: 'red',
+		marginTop: 15,
+		borderColor: 'red',
+		borderWidth: 1,
+		width: 100,
+		textAlign: 'center',
+		padding: 5,
+		height: 30,
+		borderRadius: 10,
+	},
 });
