@@ -121,10 +121,10 @@ export default function HeroComponent({ movie }: { movie: any }) {
                   >
                     <Text style={tabStyles.heroTabs}>EN</Text>
                     <Text style={[tabStyles.heroTabs, { color: "#FDFD96" }]}>
-                      7.5
+                      {movie?.vote_average}
                     </Text>
-                    <Text style={[tabStyles.heroTabs, { color: "#FF6962" }]}>
-                      18+
+                    <Text style={[tabStyles.heroTabs, { color: movie?.adult ? "#FF6962" : "#77DD76" }]}>
+                      {movie?.adult ? "18+" : "UA"}
                     </Text>
                   </View>
                 </View>
