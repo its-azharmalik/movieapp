@@ -46,7 +46,7 @@ export default function EditScreenInfo({ path }: { path: string }) {
 			<View style={styles.helpContainer}>
 				{user != '' && user != null && (
 					<>
-						<Image style={styles.userPic} source={{ uri: user?.user?.photo }} />
+						{user?.user?.photo ? <Image style={styles.userPic} source={{ uri: user?.user?.photo }} /> : <></>}
 						<Text style={styles.getStartedText}>{user.user.name}</Text>
 						<Text style={styles.getStartedText}>{user.user.email}</Text>
 					</>

@@ -58,24 +58,27 @@ export default function HeroComponent({ movie }: { movie: any }) {
 								alignItems: 'center',
 								backgroundColor: 'transparent',
 							}}>
-							<Image
+							{user?.user?.photo ? <Image
 								style={{ width: 30, height: 30, borderRadius: 20 }}
 								source={{
 									uri: user?.user?.photo,
 								}}
-							/>
+							/> : <></>}
 						</Pressable>
 					</View>
 
 					<View style={{ backgroundColor: '#000' }}>
-						<ImageBackground
+					{movie?.backdrop_path ? <ImageBackground
 							style={{
 								width: '100%',
 								height: 350,
 								zIndex: 1,
 								marginBottom: 11,
 							}}
-							src={`http://image.tmdb.org/t/p/w500${movie?.backdrop_path}`}>
+
+							source={{
+								uri: `http://image.tmdb.org/t/p/w500${movie?.backdrop_path}`,
+							}}>
 							<View
 								style={{
 									backgroundColor: 'transparent',
@@ -123,7 +126,7 @@ export default function HeroComponent({ movie }: { movie: any }) {
 									</View>
 								</View>
 							</View>
-						</ImageBackground>
+						</ImageBackground> : <></>}	
 					</View>
 				</View>
 			</View>
