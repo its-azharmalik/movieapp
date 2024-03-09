@@ -1,8 +1,8 @@
 export default {
 	expo: {
 		name: 'MovieApp',
-		slug: 'movie-app',
-		version: '1.0.0',
+		slug: 'movieApp',
+		version: '2.0.0',
 		orientation: 'portrait',
 		icon: './assets/images/logo.png',
 		scheme: 'myapp',

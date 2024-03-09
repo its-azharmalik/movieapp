@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet } from 'react-native';
 
-import { MonoText } from './StyledText';
+
 import { Text, View } from './Themed';
 
-import Colors from '@/constants/Colors';
+
 import {
 	GoogleSignin,
 	statusCodes,
@@ -46,7 +46,7 @@ export default function EditScreenInfo({ path }: { path: string }) {
 			<View style={styles.helpContainer}>
 				{user != '' && user != null && (
 					<>
-						{user?.user?.photo ? <Image style={styles.userPic} source={{ uri: user?.user?.photo }} /> : <></>}
+						{user?.user?.photo ? <Image style={styles.userPic} source={{ uri: user?.user?.photo }}></Image> : <></>}
 						<Text style={styles.getStartedText}>{user.user.name}</Text>
 						<Text style={styles.getStartedText}>{user.user.email}</Text>
 					</>

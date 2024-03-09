@@ -1,14 +1,7 @@
-import {
-  Image,
-  ImageBackground,
-  Pressable,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-} from "react-native";
+import { SafeAreaView, ScrollView } from "react-native";
 
 import { Text, View } from "@/components/Themed";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
   AppDispatch,
   RootState,
@@ -18,15 +11,12 @@ import {
 } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
 import HorzintalScroll from "@/components/HorzintalScroll";
-import { router } from "expo-router";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import HeroComponent from "@/components/HeroComponent";
 import { tabStyles } from "../styles";
 
 export default function TabTwoScreen() {
   const dispatch: AppDispatch = useDispatch();
-
-
 
   const { discoverSeries } = useSelector(
     (state: RootState) => state.discoverSeries
@@ -69,7 +59,7 @@ export default function TabTwoScreen() {
       ) : (
         <SafeAreaView>
           <ScrollView>
-			<HeroComponent movie={discoverSeries?.results[0]} />
+            <HeroComponent movie={discoverSeries?.results[0]} />
             <HorzintalScroll
               movies={trendingSeriesToday}
               title="Trending Now"
