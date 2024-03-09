@@ -2,7 +2,7 @@ import React, { Component, useEffect, useState } from "react";
 import { Text, View } from "./Themed";
 import { Image, ImageBackground, Pressable, ScrollView } from "react-native";
 import { useFonts } from "expo-font";
-import { router } from "expo-router";
+import { SplashScreen, router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { tabStyles } from "@/app/styles";
@@ -75,7 +75,7 @@ export default function HeroComponent({ movie }: { movie: any }) {
           </View>
 
           <View style={{ backgroundColor: "#000" }}>
-            {movie?.backdrop_path ? (
+            {movie?.poster_path && movie.poster_path != null && movie.poster_path != '' ? (
               <ImageBackground
                 style={{
                   width: "100%",
@@ -84,7 +84,7 @@ export default function HeroComponent({ movie }: { movie: any }) {
                   marginBottom: 11,
                 }}
                 source={{
-                  uri: `http://image.tmdb.org/t/p/w500${movie?.backdrop_path}`,
+                  uri: `http://image.tmdb.org/t/p/w500${movie.poster_path}`,
                 }}
               >
                 <View

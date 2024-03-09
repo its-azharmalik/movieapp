@@ -27,10 +27,10 @@ export default function HorzintalScroll({
 				style={tabStyles.trendingView}>
 				{movies?.results?.map((movie: any) => (
 					<View key={movie?.id} style={tabStyles.movieContainer}>
-						{movie?.backdrop_path ? <Image
+						{movie?.poster_path && movie.poster_path != null && movie.poster_path != '' ? <Image
 							style={tabStyles.imageCard}
 							source={{
-								uri: `http://image.tmdb.org/t/p/w500${movie?.backdrop_path}`,
+								uri: `http://image.tmdb.org/t/p/w500${movie.poster_path}`,
 							}}
 						/> : <></>}
 						<View style={tabStyles.movieDetail}>
