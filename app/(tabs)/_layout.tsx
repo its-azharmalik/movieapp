@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Link, Redirect, Tabs, router } from 'expo-router';
 import { Pressable } from 'react-native';
+import { GoHomeFill } from "react-icons/go";
 
 import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
@@ -37,13 +38,8 @@ export default function TabLayout() {
 			screenOptions={{
 				tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
 				tabBarStyle: {
-					backgroundColor: '#0F141C',
-					marginHorizontal: 10,
-					marginBottom: 10,
-					borderRadius: 100,
-					borderWidth: 2,
-					borderColor: '#30363C',
-					padding: 5,
+					backgroundColor: 'rgba(32,33,35,0.5)',
+					
 
 					// borderBlockColor: Colors['dark'].background,
 					// borderCurve: 'circular',
@@ -51,7 +47,9 @@ export default function TabLayout() {
 					// borderTopRightRadius: 15,
 					// paddingTop: 10,
 				},
-
+				tabBarLabelStyle: {
+					display: 'none',
+				},
 				// Disable the static render of the header on web
 				// to prevent a hydration error in React Navigation v6.
 				headerShown: false,
