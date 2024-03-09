@@ -75,9 +75,7 @@ export default function HeroComponent({ movie }: { movie: any }) {
 								zIndex: 1,
 								marginBottom: 11,
 							}}
-							source={{
-								uri: `http://image.tmdb.org/t/p/w500${movie?.backdrop_path}`,
-							}}>
+							src={`http://image.tmdb.org/t/p/w500${movie?.backdrop_path}`}>
 							<View
 								style={{
 									backgroundColor: 'transparent',
