@@ -1,7 +1,7 @@
-import { Image, ScrollView, StyleSheet } from 'react-native';
+import { Image, ImageBackground, Pressable, ScrollView, StyleSheet } from 'react-native';
 
 import { Text, View } from '@/components/Themed';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
 	AppDispatch,
 	RootState,
@@ -15,90 +15,96 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { tabStyles } from './movies';
 import HorzintalScroll from '@/components/HorzintalScroll';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { router } from "expo-router";
+import HeroComponent from '@/components/HeroComponent';
 
 export default function TabTwoScreen() {
 	const dispatch: AppDispatch = useDispatch();
+	const { discoverMovies } = useSelector(
+	  (state: RootState) => state.discoverMovies
+	);
+	const { trendingMoviesToday } = useSelector(
+	  (state: RootState) => state.trendingMoviesToday
+	);
+	const { trendingMovies } = useSelector(
+	  (state: RootState) => state.trendingMovies
+	);
 
 	const { discoverSeries } = useSelector(
 		(state: RootState) => state.discoverSeries
-	);
-	const { discoverMovies } = useSelector(
-		(state: RootState) => state.discoverMovies
-	);
-
-	const { trendingMovies } = useSelector(
-		(state: RootState) => state.trendingMovies
-	);
-
-	const { trendingSeries } = useSelector(
-		(state: RootState) => state.trendingSeries
-	);
-
-	const { trendingMoviesToday } = useSelector(
-		(state: RootState) => state.trendingMoviesToday
 	);
 
 	const { trendingSeriesToday } = useSelector(
 		(state: RootState) => state.trendingSeriesToday
 	);
-
+  
+	const [user, setUser] = useState<any>(null);
+  
 	useEffect(() => {
-		dispatch(fetchSeriesDiscover());
-		dispatch(fetchMoviesDiscover());
-		dispatch(fetchMoviesTrending());
-		dispatch(fetchSeriesTrending());
-		dispatch(fetchTrendingMoviesToday());
-		dispatch(fetchTrendingSeriesToday());
+	  getUser();
 	}, []);
-
-	const dataCheck = () => {
-		if (
-			discoverSeries?.data &&
-			discoverSeries.status != 'loading' &&
-			discoverMovies?.data &&
-			discoverMovies.status != 'loading' &&
-			trendingMovies?.data &&
-			trendingMovies.status != 'loading' &&
-			trendingSeries?.data &&
-			trendingSeries.status != 'loading' &&
-			trendingMoviesToday?.data &&
-			trendingMoviesToday.status != 'loading' &&
-			trendingSeriesToday?.data &&
-			trendingSeriesToday.status != 'loading'
-		) {
-			return true;
-		}
-		return false;
+  
+	const getUser = async () => {
+	  const userData = await AsyncStorage.getItem("user");
+	  let data;
+	  if (userData) data = JSON.parse(userData);
+	  console.log(data.user);
+	  setUser(data);
 	};
-
+  
+	useEffect(() => {
+	  dispatch(fetchMoviesDiscover());
+	  dispatch(fetchMoviesTrending());
+	  dispatch(fetchTrendingMoviesToday());
+	  dispatch(fetchSeriesDiscover());
+	  dispatch(fetchTrendingSeriesToday());
+	}, []);
+  
+	const dataCheck = () => {
+	  if (
+		discoverMovies?.data &&
+		discoverMovies.status != "loading" &&
+		trendingMoviesToday?.data &&
+		trendingMoviesToday.status != "loading" &&
+		trendingMovies?.data &&
+		trendingMovies.status != "loading" &&
+		discoverSeries?.data &&
+		discoverSeries.status != "loading" &&
+		trendingSeriesToday?.data &&
+		trendingSeriesToday.status != "loading"
+	  ) {
+		return true;
+	  }
+	  return false;
+	};
 	return (
-		<>
-			{dataCheck() ? (
-				<View style={tabStyles.container}>
-					<Text style={tabStyles.title}>Loading...</Text>
-				</View>
-			) : (
-				<ScrollView>
-					<HorzintalScroll
-						movies={trendingMovies}
-						title={'Trending Movies This Week'}
-					/>
-					<HorzintalScroll
-						movies={trendingSeries}
-						title={'Trending Series This Week'}
-					/>
-					<HorzintalScroll
-						movies={trendingSeriesToday}
-						title={'Trending Series Today'}
-					/>
-					<HorzintalScroll movies={discoverMovies} title={'Discover Movies '} />
-					<HorzintalScroll movies={discoverSeries} title={'Latest TV Teries'} />
-					<HorzintalScroll
-						movies={trendingMoviesToday}
-						title={'Trending Movies Today'}
-					/>
-				</ScrollView>
-			)}
-		</>
+	  <>
+		{dataCheck() ? (
+		  <View style={tabStyles.container}>
+			<Text style={tabStyles.title}>Loading...</Text>
+		  </View>
+		) : (
+		  <SafeAreaView>
+			<ScrollView>
+			<View style={{marginTop: -30, backgroundColor: 'transparent'}}>
+				<HeroComponent movie={discoverMovies?.results[0]} />
+			</View>
+  
+			  <HorzintalScroll movies={trendingMoviesToday} title={"Top Trending Movies"} />
+			  <HorzintalScroll
+				movies={discoverMovies}
+				title={"Fresh Picks for You"}
+			  />
+			  			  <HorzintalScroll
+				movies={discoverSeries}
+				title={"Latest TV Shows"}
+			  />
+			  <HorzintalScroll movies={trendingSeriesToday} title={"Best of Week"} />
+			</ScrollView>
+		  </SafeAreaView>
+		)}
+	  </>
 	);
-}
+  }

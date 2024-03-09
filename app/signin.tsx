@@ -23,7 +23,7 @@ export default function SignIn() {
 					res
 				);
 				if (res && user) {
-					router.replace('/(tabs)/movies');
+					router.replace('/(tabs)/home');
 				}
 			});
 		});
@@ -39,7 +39,7 @@ export default function SignIn() {
 				})
 				.then(() => {
 					setloggedIn(true);
-					router.replace('/(tabs)/movies');
+					router.replace('/(tabs)/home');
 				});
 		} catch (error: any) {
 			if (error.code === statusCodes.SIGN_IN_CANCELLED) {

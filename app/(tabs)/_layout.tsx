@@ -10,13 +10,30 @@ import { useClientOnlyValue } from '@/components/useClientOnlyValue';
 import { Text } from '@/components/Themed';
 import { useSelector } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AntDesign, Entypo, Feather, MaterialIcons, Octicons } from '@expo/vector-icons';
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
-	name: React.ComponentProps<typeof FontAwesome>['name'];
+	name: React.ComponentProps<typeof FontAwesome>['name'] |  React.ComponentProps<typeof Feather>['name'] | React.ComponentProps<typeof Octicons>['name'] | React.ComponentProps<typeof MaterialIcons>['name'] | React.ComponentProps<typeof GoHomeFill>['name'] | string;
 	color: string;
 }) {
-	return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
+	switch (props.name) {
+		case 'home':
+			// @ts-ignore
+			return <AntDesign size={28} style={{ marginBottom: -3 }} {...props} />;
+		case 'account-circle':
+			// @ts-ignore
+			return <MaterialIcons size={28} style={{ marginBottom: -3 }} {...props} />;
+		case 'video':
+			// @ts-ignore
+			return <Entypo size={28} style={{ marginBottom: -3 }} {...props} />;
+		case 'tv':
+			// @ts-ignore
+			return <Feather size={28} style={{ marginBottom: -3 }} {...props} />;
+		default:
+			// @ts-ignore
+			return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
+	}
 }
 
 export default function TabLayout() {
@@ -65,7 +82,7 @@ export default function TabLayout() {
 				name='movies'
 				options={{
 					title: 'Movies',
-					tabBarIcon: ({ color }) => <TabBarIcon name='ticket' color={color} />,
+					tabBarIcon: ({ color }) => <TabBarIcon name='video' color={color} />,
 				}}
 			/>
 			<Tabs.Screen
@@ -79,7 +96,7 @@ export default function TabLayout() {
 				name='profile'
 				options={{
 					title: 'Profile',
-					tabBarIcon: ({ color }) => <TabBarIcon name='user' color={color} />,
+					tabBarIcon: ({ color }) => <TabBarIcon name='account-circle' color={color} />,
 					headerRight: () => (
 						<Link href='/modal' asChild>
 							<Pressable>

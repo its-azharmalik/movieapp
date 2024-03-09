@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Text, View } from './Themed';
-import { tabStyles } from '@/app/(tabs)/movies';
 import { Image, ScrollView } from 'react-native';
 import { useFonts } from 'expo-font';
+import { tabStyles } from '@/app/(tabs)/movies';
 
 export default function HorzintalScroll({
 	movies,
@@ -34,7 +34,7 @@ export default function HorzintalScroll({
 							}}
 						/>
 						<View style={tabStyles.movieDetail}>
-							<Text style={tabStyles.movieTitle}>{movie.original_title}</Text>
+							<Text style={tabStyles.movieTitle}>{movie.original_title ? movie.original_title : movie.original_name}</Text>
 							<View style={tabStyles.movieRU}>
 								<Text style={tabStyles.movieOL}>
 									{movie.original_language.toUpperCase()} | {movie.vote_average}
