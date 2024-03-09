@@ -17,11 +17,11 @@ import {
   fetchTrendingSeriesToday,
 } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
-import { tabStyles } from "./movies";
 import HorzintalScroll from "@/components/HorzintalScroll";
 import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import HeroComponent from "@/components/HeroComponent";
+import { tabStyles } from "../styles";
 
 export default function TabTwoScreen() {
   const dispatch: AppDispatch = useDispatch();
